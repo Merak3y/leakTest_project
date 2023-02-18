@@ -43,6 +43,7 @@ extern NexText tStatus;
 extern NexText tProgress;
 
 extern NexText tResult;
+extern NexText tStatus_msg;
 
 
 // NexButton(0, 1, "b0") : (page, id, name)

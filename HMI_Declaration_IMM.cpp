@@ -41,6 +41,9 @@ NexText tStatus = NexText(2, 67, "tStatus");
 NexText tProgress = NexText(2, 65, "tProgress");
 
 NexText tResult = NexText(2, 61, "tResult");
+NexText tStatus_msg = NexText(2, 83, "tStatus_msg");
+
+
 
 
 /***** NexButton(0, 1, "b0") : (page, id, name) *****/

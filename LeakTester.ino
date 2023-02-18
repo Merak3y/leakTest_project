@@ -100,18 +100,9 @@ void loop() {
 
   // Initialization
   if (flag_timeEnd == 1U || flag_toMain == 1U || flag_failCur == 1U || flag_toMain_setting == 1U) {
-
     if(flag_init == OFF)
     {
       init_hardWare();
-    }
-    // if(flag_toMain == ON)
-    // {
-    //   init_hardWare();
-    // }
-    else
-    {
-      
     }
 
     if (flag_timeEnd == 1U) {
@@ -155,7 +146,9 @@ void loop() {
         init_HMI_Disp();
         get_Signal_Pressure_All(node);
         get_refPresure();
+        tResult.setText("Leak testing...");
       }
+      
       
       // After done setting HW
       else if(flag_HW_setting == DONE && flag_serialHMI == OFF) {
@@ -174,7 +167,6 @@ void loop() {
           if (cnt_timer > (int)wait_time_test_cnt_500ms) { cnt_timer = (int)wait_time_test_cnt_500ms; }
           sendData2HMI_PRGRS(cnt_timer);
           HMI_DISP_Time((millis() - time_cur) * 0.001, "tProgress");
-          //.setText("Setting Main valve...");
           gl_percent = (int)(((float)cnt_timer / (float)wait_time_test_cnt_500ms) * 100);
           if(gl_percent > 100)
           {
@@ -416,6 +408,8 @@ void stabilization()
 {
   tProgress.setText("Stabilizing after closing solenoids...");
   Serial.println("Stabilizing after closing solenoids...");
+
+  tResult.setText("Stabilizing...");
   wait_openAI(wait_time_stbl_ms);
 }
 

@@ -248,6 +248,7 @@ void p1_b0_Callback(void *ptr){
 void p2_b0_Callback(void *ptr){
   
   digitalWrite(LED_PIN, LOW);
+  
 
   flag_toMain = 1U;
 }

@@ -55,7 +55,7 @@ int flag_serialHMI = 0U;
 int flag_init = 0U;
 int flag_toMain_setting = 0U;
 
-float wait_time_stbl_ms = 10000;//900000;
+float wait_time_stbl_ms = 900000;//900000;
 float wait_time_test_cnt_500ms = 60;
 
 int period_realTimeMonitoring_cnt_500ms = 10; //500ms x 10 = 5 sec
@@ -337,13 +337,13 @@ void sendData2HMI_on_passbutton(String str_fold_in, int int_idx_in)
 }
 
 
-void sendData2HMI_PRGRS(int i_data_in)
+void sendData2HMI_PRGRS(int l_data_in)
 {
   String l_str_data_in = "";  
   String l_str_data2hmi = "";
   int l_percent_progress = 0U;
 
-  l_percent_progress = (int)(((float)i_data_in/(float)(wait_time_test_cnt_500ms))*100);
+  l_percent_progress = (int)(((float)l_data_in/(float)(wait_time_test_cnt_500ms))*100);
 
   if(l_percent_progress > 100)
   {
@@ -359,13 +359,15 @@ void sendData2HMI_PRGRS(int i_data_in)
 }
 
 
-void sendData2HMI_PRGRS_STBL(int i_data_in)
+void sendData2HMI_PRGRS_STBL(unsigned long l_data_in)
 {
   String l_str_data_in = "";  
   String l_str_data2hmi = "";
   int l_percent_progress = 0U;
 
-  l_percent_progress = (int)(((float)i_data_in*1/(float)(wait_time_stbl_ms))*100);
+  //l_percent_progress = (int)(((float)l_data_in*1/(float)(wait_time_stbl_ms))*100);
+
+  l_percent_progress = (int) ((float)l_data_in/wait_time_stbl_ms * 100.0);
 
   if(l_percent_progress > 95)
   {
