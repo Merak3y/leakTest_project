@@ -1,0 +1,29 @@
+230201_bolt 님 사무실
+float gl_ref_bar = 0.0f;
+float gl_regOut_target = 0.0f; 
+
+int에서 float로 변경
+main valve 반대로 변경
+
+dry 버튼 마지막 버튼
+
+
+
+수정완료
+hmi tf 11 12 순서 변경
+sf6 tf6으로 되어잇음
+
+-------------------------------------------------------------------
+bent버튼 추가
+
+- imm/dry 모드진입시 되돌아가는것 추가
+- fail이나 시험 완료시 초기화
+- re-check pressure after stabilization -> fail, need to add 
+- 3분 hmi 모니터링       --- 
+- 전원 on시 bent 기능
+
+
+=========================================
+02_13 
+init은  backto main 누르고 하게 바꿈
+ back to main 이후 7초동안 init 하고 돌아감
