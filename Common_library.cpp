@@ -8,21 +8,17 @@
 #include "HW_Func.h"
 #include <ModbusMaster232.h> 
 
-// $$ Set address for IMM
+// $$$ Set address for IMM
 // SF1   , SF2   , SF3   , SF4   , SF5   , SF6   , SF7
 float arr_pSensor_conversionFactor_sf[NUM_SEVEN_FOLD] = { 63.04019, 62.72833, 62.56712, 62.78131, 62.87944, 62.86849, 62.88477 };
 // TF1   , TF2   , TF3   , TF4   , TF5   , TF6   , TF7   , TF8   , TF9   , TF10  , TF11  , TF12
 float arr_pSensor_conversionFactor_tf[NUM_TWELVE_FOLD] = { 62.42546, 62.52118, 62.44877, 62.42376, 62.51161, 62.84930, 62.74467, 62.64123, 63.01595, 63.01700, 62.83428, 62.82244 };
 
-// Set address for DRY
+// $$$ Set address for DRY
 // SF13  , SF14  , SF15  , SF16  , SF17
 float arr_pSensor_conversionFactor_sf_dry[NUM_SEVEN_FOLD_DRY] = { 63.04019, 62.72833, 62.56712, 62.78131, 62.87944};
 // TF1   , TF2   , TF3   , TF4   , TF5   , TF6   , TF7   , TF8   , TF9   , TF10  , TF11  , TF12
 float arr_pSensor_conversionFactor_tf_dry[NUM_TWELVE_FOLD_DRY] = { 62.42546, 62.52118, 62.44877, 62.42376, 62.51161, 62.84930, 62.74467, 62.64123, 63.01595, 63.01700, 62.83428, 62.82244 };
-
-
-
-
 
 
 
@@ -63,7 +59,7 @@ int pt_start = 0U;
 int pt_end = 0U;
 
 float gl_ref_bar = 0.0f;
-float gl_regOut_target = 0.0f;
+float gl_regOut_target = REGOUT_TAR_7_5;
 
 int gl_percent = 0U;
 int flag_serialHMI = 0U;
