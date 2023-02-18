@@ -146,6 +146,8 @@ extern int gl_percent;
 
 extern float wait_time_stbl_ms;
 extern float wait_time_test_cnt_500ms;
+extern int period_realTimeMonitoring_cnt_500ms;
+extern int flag_realTimeMonitoring;
 
 /********************************************************* Function *********************************************************/
 float calAve(float l_data_in, float cnt, float max_cnt);

@@ -28,7 +28,7 @@ void p4_b0_Callback(void *ptr){
   
   // Caluation sum of the number of seven/three folds
   gl_sum_fold = int_cal_sum_arr();
-  gl_sum_fold = 1;
+  //gl_sum_fold = 1;
   // if any button of folds is on and any pressure check button on, flag start = 1
   if((stat_2_5_bar_dry == 1 || stat_7_5_bar_dry == 1) && gl_sum_fold != 0)
   {
@@ -212,7 +212,7 @@ void p1_b0_Callback(void *ptr){
   digitalWrite(LED_PIN, HIGH);  
   // Caluation sum of the number of seven/three folds
   gl_sum_fold = int_cal_sum_arr();
-  gl_sum_fold=1;
+  //gl_sum_fold=1;
   Serial_Mon("gl_sum_fold :", gl_sum_fold);
 
   // if any button of folds is on and any pressure check button on, flag start = 1

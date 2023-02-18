@@ -55,8 +55,12 @@ int flag_serialHMI = 0U;
 int flag_init = 0U;
 int flag_toMain_setting = 0U;
 
-float wait_time_stbl_ms = 900000;
+float wait_time_stbl_ms = 10000;//900000;
 float wait_time_test_cnt_500ms = 60;
+
+int period_realTimeMonitoring_cnt_500ms = 10; //500ms x 10 = 5 sec
+int flag_realTimeMonitoring = ON;
+
 
 
 // Function
@@ -213,7 +217,7 @@ float int_cal_sum_arr()
 {
   int l_sum_fold = 0U;
   
-  if(flag_start_IMM == 1U)
+  if(stat_2_5_bar == 1 || stat_7_5_bar == 1)
   {
     for (int idx = 0U ; idx < NUM_SEVEN_FOLD; idx++)
     {
@@ -224,7 +228,7 @@ float int_cal_sum_arr()
       l_sum_fold += stat_tf[idx];
     }
   }
-  else if(flag_start_DRY == 1U)
+  else if(stat_2_5_bar_dry == 1 || stat_7_5_bar_dry == 1)
   {
     for (int idx = 0U ; idx < NUM_SEVEN_FOLD_DRY; idx++)
     {

@@ -101,14 +101,14 @@ void loop() {
   // Initialization
   if (flag_timeEnd == 1U || flag_toMain == 1U || flag_failCur == 1U || flag_toMain_setting == 1U) {
 
-    // if(flag_init == OFF)
-    // {
-    //   init_hardWare();
-    // }
-    if(flag_toMain == ON)
+    if(flag_init == OFF)
     {
       init_hardWare();
     }
+    // if(flag_toMain == ON)
+    // {
+    //   init_hardWare();
+    // }
     else
     {
       
@@ -166,7 +166,6 @@ void loop() {
         CheckFail(thr_pressure_each_ma);
         /*********** 3 [DISPLAY HMI]  *************/
         set_HMI_Disp_Done();
-
         cnt_loop++;
         pt_start++;
         pt_end++;
@@ -175,6 +174,7 @@ void loop() {
           if (cnt_timer > (int)wait_time_test_cnt_500ms) { cnt_timer = (int)wait_time_test_cnt_500ms; }
           sendData2HMI_PRGRS(cnt_timer);
           HMI_DISP_Time((millis() - time_cur) * 0.001, "tProgress");
+          //.setText("Setting Main valve...");
           gl_percent = (int)(((float)cnt_timer / (float)wait_time_test_cnt_500ms) * 100);
           if(gl_percent > 100)
           {
@@ -738,6 +738,11 @@ void set_HMI_Disp()
   }
 
   gl_avgcur_sum = gl_avgcur_sum + HMI_DISP_AvgCur_WF();
+  
+  if(cnt_loop % period_realTimeMonitoring_cnt_500ms == 0 && flag_realTimeMonitoring == ON)
+  {
+    HMI_DISP_Cur_PRS_ALL();
+  }
 }
 
 void set_HMI_Disp_Done()
