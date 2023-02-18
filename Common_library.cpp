@@ -8,16 +8,31 @@
 #include "HW_Func.h"
 #include <ModbusMaster232.h> 
 
-//Global varibles
-float arr_pSensor_conversionFactor_sf[NUM_SEVEN_FOLD]  = { 63.04019, 62.72833, 62.56712, 62.78131, 62.87944, 62.86849, 62.88477 };
+// $$ Set address for IMM
+// SF1   , SF2   , SF3   , SF4   , SF5   , SF6   , SF7
+float arr_pSensor_conversionFactor_sf[NUM_SEVEN_FOLD] = { 63.04019, 62.72833, 62.56712, 62.78131, 62.87944, 62.86849, 62.88477 };
+// TF1   , TF2   , TF3   , TF4   , TF5   , TF6   , TF7   , TF8   , TF9   , TF10  , TF11  , TF12
 float arr_pSensor_conversionFactor_tf[NUM_TWELVE_FOLD] = { 62.42546, 62.52118, 62.44877, 62.42376, 62.51161, 62.84930, 62.74467, 62.64123, 63.01595, 63.01700, 62.83428, 62.82244 };
+
+// Set address for DRY
+// SF13  , SF14  , SF15  , SF16  , SF17
+float arr_pSensor_conversionFactor_sf_dry[NUM_SEVEN_FOLD_DRY] = { 63.04019, 62.72833, 62.56712, 62.78131, 62.87944};
+// TF1   , TF2   , TF3   , TF4   , TF5   , TF6   , TF7   , TF8   , TF9   , TF10  , TF11  , TF12
+float arr_pSensor_conversionFactor_tf_dry[NUM_TWELVE_FOLD_DRY] = { 62.42546, 62.52118, 62.44877, 62.42376, 62.51161, 62.84930, 62.74467, 62.64123, 63.01595, 63.01700, 62.83428, 62.82244 };
+
+
+
+
+
+
+
 
 float arr_pSensor_compensationFactor_sf_bar_s[NUM_SEVEN_FOLD]  = { 0, 0, 0, 0, 0, 0, 0 };
 float arr_pSensor_compensationFactor_tf_bar_s[NUM_TWELVE_FOLD] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-float thr_pressure_each_fin = THR_PRESSURE_EACH_FIN_2_5; // default thr : 2.5bar
-float thr_pressure_each_ma = THR_PRESSURE_EACH_MA_2_5;   // default thr : 2.5bar
-float thr_pressure_all_fin = THR_PRESSURE_ALL_FIN_2_5;   // default thr : 2.5bar
+float thr_pressure_each_fin = THR_PRESSURE_EACH_FIN_7_5; // default thr : 7.5bar
+float thr_pressure_each_ma = THR_PRESSURE_EACH_MA_7_5;   // default thr : 7.5bar
+float thr_pressure_all_fin = THR_PRESSURE_ALL_FIN_7_5;   // default thr : 7.5bar
 
 bool flag_start_IMM = 0;
 bool flag_start_DRY = 0;
@@ -39,7 +54,7 @@ int flag_timer_500ms = 0U;
 
 int flag_DISP_deactivation = OFF;
 int flag_HW_setting = NONE;
-uint16_t val_regulatorInput = 0U;
+uint16_t val_regulatorInput = ANALOG_INPUT_7_5;
 
 uint16_t gl_STATE = SET_TEST_MODE;
 int gl_DEBUG_MODE = WO_PLC;
@@ -55,10 +70,14 @@ int flag_serialHMI = 0U;
 int flag_init = 0U;
 int flag_toMain_setting = 0U;
 
-float wait_time_stbl_ms = 900000;//900000;
-float wait_time_test_cnt_500ms = 60;
+// $$$ Stabilization time
+float wait_time_stbl_ms = 10000; //15mins : 900000;
+// $$$ leak test time
+float wait_time_test_cnt_500ms = 60; // 60mins : 1200
 
-int period_realTimeMonitoring_cnt_500ms = 10; //500ms x 10 = 5 sec
+// $$$ period for realtime mon
+int period_realTimeMonitoring_cnt_500ms = 20; //500ms x period_realTimeMonitoring_cnt_500ms = 10 sec
+// $$$ flag of realtime mon
 int flag_realTimeMonitoring = ON;
 
 
@@ -216,8 +235,12 @@ void fT_sendData2HMI_WF(float f_data_in)
 float int_cal_sum_arr()
 {
   int l_sum_fold = 0U;
-  
-  if(stat_2_5_bar == 1 || stat_7_5_bar == 1)
+
+  if(gl_STATE == RUN_DIAGNOSTIC)
+  {
+    l_sum_fold = NUM_SEVEN_FOLD + NUM_TWELVE_FOLD;
+  }
+  else if(stat_2_5_bar == 1 || stat_7_5_bar == 1)
   {
     for (int idx = 0U ; idx < NUM_SEVEN_FOLD; idx++)
     {
@@ -373,7 +396,7 @@ void sendData2HMI_PRGRS_STBL(unsigned long l_data_in)
   {
     l_percent_progress = 100;
   }
-  Serial_Mon("l_percent_progress", l_percent_progress);
+  //Serial_Mon("l_percent_progress", l_percent_progress);
 
   l_str_data_in = String(l_percent_progress);
 

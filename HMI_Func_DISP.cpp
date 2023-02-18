@@ -254,7 +254,34 @@ float HMI_DISP_AvgCur_WF()
   int l_mode_idx_tf = 0U;
 
 
-  if(flag_start_DRY == 1U)
+  if(flag_start_IMM == 1U)
+  {
+    if(gl_STATE == RUN_DIAGNOSTIC)
+    {
+      l_wf_id_in = ID_WF_DIAGNOSTIC;
+    }
+    else
+    {
+      l_wf_id_in = ID_WF_IMM;
+    }
+    
+    l_sum_fold = int_cal_sum_arr();
+    for (int idx = 0U ; idx < NUM_SEVEN_FOLD; idx++)
+    {
+      if(stat_sf[idx] == 1)
+      {
+        l_sum_data = l_sum_data + data_sf[idx];
+      }
+    }
+    for (int idx = 0U ; idx < NUM_TWELVE_FOLD; idx++)
+    {
+      if(stat_tf[idx] == 1)
+      {
+        l_sum_data = l_sum_data + data_tf[idx];
+      }
+    }
+  }
+  else if(flag_start_DRY == 1U)
   { 
     l_wf_id_in = ID_WF_DRY;
     l_sum_fold = int_cal_sum_arr();
@@ -274,26 +301,7 @@ float HMI_DISP_AvgCur_WF()
       }
     }
   }
-  else if(flag_start_IMM == 1U)
-  {
-    
-    l_wf_id_in = ID_WF_IMM;
-    l_sum_fold = int_cal_sum_arr();
-    for (int idx = 0U ; idx < NUM_SEVEN_FOLD; idx++)
-    {
-      if(stat_sf[idx] == 1)
-      {
-        l_sum_data = l_sum_data + data_sf[idx];
-      }
-    }
-    for (int idx = 0U ; idx < NUM_TWELVE_FOLD; idx++)
-    {
-      if(stat_tf[idx] == 1)
-      {
-        l_sum_data = l_sum_data + data_tf[idx];
-      }
-    }
-  }
+  Serial_Mon("l_sum_fold", l_sum_fold);
   Serial_Mon("l_sum_data", l_sum_data);
 
   l_avgcur = l_sum_data/(float)l_sum_fold;

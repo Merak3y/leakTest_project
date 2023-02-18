@@ -92,12 +92,15 @@
 
 #define ID_WF_IMM 60
 #define ID_WF_DRY 22
+#define ID_WF_DIAGNOSTIC 4
 
 
 
 /********************************************************* Global varibles *********************************************************/
 extern float arr_pSensor_conversionFactor_sf[NUM_SEVEN_FOLD];
 extern float arr_pSensor_conversionFactor_tf[NUM_TWELVE_FOLD];
+extern float arr_pSensor_conversionFactor_sf_dry[NUM_SEVEN_FOLD_DRY];
+extern float arr_pSensor_conversionFactor_tf_dry[NUM_TWELVE_FOLD_DRY];
 
 extern float arr_pSensor_compensationFactor_sf_bar_s[NUM_SEVEN_FOLD];
 extern float arr_pSensor_compensationFactor_tf_bar_s[NUM_TWELVE_FOLD];

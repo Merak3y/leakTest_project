@@ -139,7 +139,8 @@ void loop() {
     {
       set_leakTestMode();
     }
-    else if (gl_STATE == RUN_IMM || gl_STATE == RUN_DRY ) {
+
+    else if (gl_STATE == RUN_IMM || gl_STATE == RUN_DRY || gl_STATE == RUN_DIAGNOSTIC) {
       if (flag_HW_setting == NONE) {
         set_hardWare();
         flag_HW_setting = DONE;
@@ -214,6 +215,10 @@ void set_Solenoid(ModbusMaster232 l_node_in) {
     // SOL OPEN(RED)
     for (int idx = 0U; idx < NUM_SEVEN_FOLD; idx++)
     {
+      if(gl_STATE == RUN_DIAGNOSTIC){
+        stat_sf[idx] = 1U;
+        Serial.println("MODE : RUN_DIAGNOSTIC");
+      }
       if (stat_sf[idx] == 1U) {
         l_node_in.writeSingleCoil(arr_addr_Solenoid_ON_SF[idx], SOLENOID_OFF);
         l_node_in.writeSingleCoil(arr_addr_Solenoid_OFF_SF[idx], SOLENOID_ON);
@@ -223,6 +228,9 @@ void set_Solenoid(ModbusMaster232 l_node_in) {
       }
     }
     for (int idx = 0U; idx < NUM_TWELVE_FOLD; idx++) {
+      if(gl_STATE == RUN_DIAGNOSTIC){
+        stat_tf[idx] = 1U;
+      }
       if (stat_tf[idx] == 1U) {
         l_node_in.writeSingleCoil(arr_addr_Solenoid_ON_TF[idx], SOLENOID_OFF);
         l_node_in.writeSingleCoil(arr_addr_Solenoid_OFF_TF[idx], SOLENOID_ON);
@@ -237,6 +245,9 @@ void set_Solenoid(ModbusMaster232 l_node_in) {
     // SOL OPEN(RED)
     for (int idx = 0U; idx < NUM_SEVEN_FOLD_DRY; idx++)
     {
+      if(gl_STATE == RUN_DIAGNOSTIC){
+        stat_sf_dry[idx] = 1U;
+      }
       if (stat_sf_dry[idx] == 1U) {
         l_node_in.writeSingleCoil(arr_addr_Solenoid_ON_SF_dry[idx], SOLENOID_OFF);
         l_node_in.writeSingleCoil(arr_addr_Solenoid_OFF_SF_dry[idx], SOLENOID_ON);
@@ -246,6 +257,9 @@ void set_Solenoid(ModbusMaster232 l_node_in) {
       }
     }
     for (int idx = 0U; idx < NUM_TWELVE_FOLD_DRY; idx++) {
+      if(gl_STATE == RUN_DIAGNOSTIC){
+        stat_tf_dry[idx] = 1U;
+      }
       if (stat_tf_dry[idx] == 1U) {
         l_node_in.writeSingleCoil(arr_addr_Solenoid_ON_TF_dry[idx], SOLENOID_OFF);
         l_node_in.writeSingleCoil(arr_addr_Solenoid_OFF_TF_dry[idx], SOLENOID_ON);
@@ -690,11 +704,15 @@ void set_leakTestMode()
 {
   if (flag_start_IMM == ON && flag_start_DRY == ON) {
     gl_STATE = RUN_DIAGNOSTIC;
+    Serial.println("RUN_DIAGNOSTIC");
   } else if (flag_start_DRY == ON) {
     gl_STATE = RUN_DRY;
+    Serial.println("RUN_DRY");
   } else if (flag_start_IMM == ON) {
     gl_STATE = RUN_IMM;
+    Serial.println("RUN_IMM");
   }
+  
 }
 
 void set_hardWare()

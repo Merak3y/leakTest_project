@@ -32,14 +32,14 @@ void get_Signal_Pressure_All(ModbusMaster232 l_node_in)
     {
       if(stat_sf_dry[idx] == 1)
       {
-        get_Signal_Pressure(data_sf_dry, idx, l_node_in, arr_addr_P_Sensor_SF_dry[idx], arr_pSensor_conversionFactor_sf, arr_pSensor_compensationFactor_sf_bar_s, 1);
+        get_Signal_Pressure(data_sf_dry, idx, l_node_in, arr_addr_P_Sensor_SF_dry[idx], arr_pSensor_conversionFactor_sf_dry, arr_pSensor_compensationFactor_sf_bar_s, 1);
       }
     }
     for (int idx = 0U ; idx < NUM_TWELVE_FOLD_DRY; idx++)
     {
       if(stat_tf_dry[idx] == 1)
       {
-        get_Signal_Pressure(data_tf_dry, idx, l_node_in, arr_addr_P_Sensor_TF_dry[idx], arr_pSensor_conversionFactor_tf, arr_pSensor_compensationFactor_tf_bar_s, 2);
+        get_Signal_Pressure(data_tf_dry, idx, l_node_in, arr_addr_P_Sensor_TF_dry[idx], arr_pSensor_conversionFactor_tf_dry, arr_pSensor_compensationFactor_tf_bar_s, 2);
       }
     }
   }
